@@ -1,0 +1,27 @@
+{
+  "name": "neo-js-smartcontract",
+  "author": "birmas <birmingh@gmail.com>",
+  "version": "0.0.1",
+  "description": "NEO Javscript SmartContract",
+  "main": "source/neo-js-smartcontract.js",
+  "license": "MIT",
+  "scripts": {
+    "pack": "build --dir",
+    "dist": "build",
+    "test": "./node_modules/.bin/mocha --recursive --opts ./tests/mocha.opts -b ./tests/neo-js-smartcontract|| exit 0"
+  },
+  "dependencies": {
+    "big-integer": "^1.6.26",
+    "crypto-js": "^3.1.9-1",
+    "dict": "^1.4.0",
+    "neo-js-blockchain": "git+https://github.com/CityOfZion/neo-js.git#236501611cc018257db5be4e41c105a90bfe9262",
+    "utf8": "^2.1.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  }
+}
