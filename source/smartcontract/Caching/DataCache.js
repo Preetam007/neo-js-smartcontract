@@ -62,17 +62,36 @@ class DataCache extends Base {
 
   //public void DeleteWhere(Func<TKey, TValue, bool> predicate)
   DeleteWhere(predicate) {
-
+    this.Exception('NotImplemented()', 'DataCache.DeleteWhere()');
   }
 
   //public IEnumerable<KeyValuePair<TKey, TValue>> Find(byte[] key_prefix)
   Find(key_prefix) {
+    const storedMatches = this.FindInternal(key_prefix);
+    for (const pairKey in storedMatches) {
+      const pair = storedMatches[pairKey];
 
+      if (!this.dictionary.has(pair.Key)) {
+        this.dictionary.set(key, {
+          Key: pair.Key,
+          Item: pair.Value,
+          State: TrackState.None
+        });
+      }
+    }
+
+    this.dictionary.forEach(function (value, key) {
+      if(value.State !== TrackState.Deleted && key.startsWith(key_prefix)) {
+        return {
+          key: value.Item
+        }
+      }
+    });
   }
 
   //protected abstract IEnumerable<KeyValuePair<TKey, TValue>> FindInternal(byte[] key_prefix)
   FindInternal(key_prefix) {
-
+    return {};
   }
 
   //protected internal IEnumerable<Trackable> GetChangeSet()

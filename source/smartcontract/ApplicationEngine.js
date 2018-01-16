@@ -1,3 +1,4 @@
+const CachedScriptTable = require(__dirname + "/CachedScriptTable");
 const DataCache = require(__dirname + "/Caching/DataCache");
 const neovm = require('neo-js-vm');
 const ExecutionEngine = neovm.ExecutionEngine;
@@ -109,20 +110,26 @@ class ApplicationEngine extends ExecutionEngine {
   //public static ApplicationEngine Run(byte[] script, IScriptContainer container = null)
   Run(script, container = null) {
     this.Debug('ApplicationEngine.Run(%s, %s)', script, container);
+
+    // DataCache<UInt160, AccountState> accounts = Blockchain.Default.CreateCache<UInt160, AccountState>();
     let accounts = new DataCache();
+    // DataCache<ECPoint, ValidatorState> validators = Blockchain.Default.CreateCache<ECPoint, ValidatorState>();
+    let validators = new DataCache();
+    // DataCache<UInt256, AssetState> assets = Blockchain.Default.CreateCache<UInt256, AssetState>();
+    let assets = new DataCache();
+    // DataCache<UInt160, ContractState> contracts = Blockchain.Default.CreateCache<UInt160, ContractState>();
+    let contracts = new DataCache();
+    // DataCache<StorageKey, StorageItem> storages = Blockchain.Default.CreateCache<StorageKey, StorageItem>();
+    let storages = new DataCache();
+
+    // CachedScriptTable script_table = new CachedScriptTable(contracts);
+    let script_table = new CachedScriptTable(contracts);
     /*
-    DataCache<UInt160, AccountState> accounts = Blockchain.Default.CreateCache<UInt160, AccountState>();
-    DataCache<ECPoint, ValidatorState> validators = Blockchain.Default.CreateCache<ECPoint, ValidatorState>();
-    DataCache<UInt256, AssetState> assets = Blockchain.Default.CreateCache<UInt256, AssetState>();
-    DataCache<UInt160, ContractState> contracts = Blockchain.Default.CreateCache<UInt160, ContractState>();
-    DataCache<StorageKey, StorageItem> storages = Blockchain.Default.CreateCache<StorageKey, StorageItem>();
-    CachedScriptTable script_table = new CachedScriptTable(contracts);
     StateMachine service = new StateMachine(accounts, validators, assets, contracts, storages);
     ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, container, script_table, service, Fixed8.Zero, true);
     engine.LoadScript(script, false);
     engine.Execute();
     return engine;
-
      */
   }
 }
